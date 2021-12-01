@@ -13,3 +13,7 @@ class Auth0LoginRequiredMixin(LoginRequiredMixin):
             return self.handle_no_permission()
 
         return super().dispatch(request, *args, **kwargs)
+
+
+class NotRestrictedMixin:
+    """アクセス制限がかかっていないことを表すMixin"""

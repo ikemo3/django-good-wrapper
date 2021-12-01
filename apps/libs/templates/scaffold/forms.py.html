@@ -1,0 +1,15 @@
+from django import forms
+
+from {{ package }}.models import {{ model_name }}
+
+
+class {{ model_name }}AddForm(forms.ModelForm):
+    class Meta:
+        model = {{ model_name }}
+        fields = forms.ALL_FIELDS
+
+
+class {{ model_name }}EditForm(forms.ModelForm):
+    class Meta:
+        model = {{ model_name }}
+        fields = forms.ALL_FIELDS

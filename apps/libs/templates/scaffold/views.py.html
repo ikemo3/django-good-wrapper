@@ -1,0 +1,35 @@
+from apps.libs.menu import CRUDLMenu
+from apps.libs.views import GenericAddView, GenericDeleteView, GenericDetailView, GenericEditView, GenericListView
+
+from {{ const_package }} import consts
+from {{ package }}.forms import {{ model_name }}AddForm, {{ model_name }}EditForm
+from {{ package }}.models import {{ model_name }}
+
+Menu = CRUDLMenu({{ model_name }}, consts.DASHBOARD, consts.ALL_MENU)
+
+{% if has_list %}
+class {{ model_name }}ListView(GenericListView):
+    model = {{ model_name }}
+    menu = Menu
+{% endif %}
+{% if has_detail %}
+class {{ model_name }}DetailView(GenericDetailView):
+    model = {{ model_name }}
+    menu = Menu
+{% endif %}
+{% if has_add %}
+class {{ model_name }}AddView(GenericAddView):
+    model = {{ model_name }}
+    form_class = {{ model_name }}AddForm
+    menu = Menu
+{% endif %}
+{% if has_edit %}
+class {{ model_name }}EditView(GenericEditView):
+    model = {{ model_name }}
+    form_class = {{ model_name }}EditForm
+    menu = Menu
+{% endif %}
+{% if has_delete %}
+class {{ model_name }}DeleteView(GenericDeleteView):
+    model = {{ model_name }}
+    menu = Menu{% endif %}

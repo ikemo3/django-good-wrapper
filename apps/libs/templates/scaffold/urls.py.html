@@ -1,0 +1,13 @@
+from apps.libs.url import create_crudl
+from {{ package }} import views
+
+app_name = "{{ app_name }}"
+
+
+urlpatterns = create_crudl(
+    list_view=views.{{ model_name }}ListView,
+    detail_view=views.{{ model_name }}DetailView,
+    add_view=views.{{ model_name }}AddView,
+    edit_view=views.{{ model_name }}EditView,
+    delete_view=views.{{ model_name }}DeleteView,
+)

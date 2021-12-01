@@ -1,0 +1,18 @@
+<!-- global menu start -->
+{% for sections in global_menu %}
+    <div class="uk-child-width-1-2" uk-grid>
+        {% for section in sections %}
+            <div>
+                <h2 class="uk-h3">{{ section.label }}</h2>
+                <ul class="uk-nav uk-navbar-dropdown-nav">
+                    {% for link in section.links %}
+                        <li>
+                            <a href="{{ link.url }}">{{ link.label }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endfor %}
+    </div>
+{% endfor %}
+<!-- global menu end -->

@@ -1,0 +1,68 @@
+from django.urls import reverse
+
+from apps.libs.tests import GenericTestAdd, GenericTestDelete, GenericTestDetail, GenericTestEdit, GenericTestList
+from {{ package }}.models import {{ model_name }}
+from {{ package }}.tests.factories import {{ model_name }}Factory
+
+{% if has_list %}
+class Test{{ model_name }}ListView(GenericTestList):
+    model = {{ model_name }}
+    url = reverse("{{ url_prefix }}:list")
+
+    def get_anchor_text(self, instance: {{ model_name }}):
+        return f"{instance.name}"
+
+    def get_fixture(self):
+        instance1 = {{ model_name }}Factory()
+        instance2 = {{ model_name }}Factory()
+        instance3 = {{ model_name }}Factory()
+        instance4 = {{ model_name }}Factory()
+
+        return [instance1, instance2, instance3, instance4]
+{% endif %}
+{% if has_detail %}
+class Test{{ model_name }}DetailView(GenericTestDetail):
+    model = {{ model_name }}
+    model_factory = {{ model_name }}Factory
+    display_keys = ("id",)  # TODO: 実装
+
+    def get_url(self, instance: {{ model_name }}):
+        return reverse("{{ url_prefix }}:detail", args=[instance.id])
+{% endif %}
+{% if has_add %}
+class Test{{ model_name }}AddView(GenericTestAdd):
+    model = {{ model_name }}
+    url = reverse("{{ url_prefix }}:add")
+    success_url = reverse("{{ url_prefix }}:list")
+
+    minimum_inputs = {
+        # TODO: 実装
+    }
+    maximum_inputs = {
+        # TODO: 実装
+    }
+    invalid_values = {
+        # TODO: 実装
+    }
+{% endif %}
+{% if has_edit %}
+class Test{{ model_name }}EditView(GenericTestEdit):
+    model = {{ model_name }}
+    model_factory = {{ model_name }}Factory
+    success_url = reverse("{{ url_prefix }}:list")
+    maximum_inputs = {
+        # TODO: 実装
+    }
+
+    def get_url(self, instance):
+        return reverse("{{ url_prefix }}:edit", args=[instance.id])
+{% endif %}
+{% if has_delete %}
+class Test{{ model_name }}DeleteView(GenericTestDelete):
+    model = {{ model_name }}
+    model_factory = {{ model_name }}Factory
+    success_url = reverse("{{ url_prefix }}:list")
+    display_keys = ("id",)  # TODO: 実装
+
+    def get_url(self, instance):
+        return reverse("{{ url_prefix }}:delete", args=[instance.id]){% endif %}

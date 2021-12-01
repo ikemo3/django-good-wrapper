@@ -1,0 +1,7 @@
+from apps.libs.tests import GenericTestModel
+
+
+class Test{{ model_name }}(GenericTestModel):
+    def test_str(self):
+        instance = {{ model_name }}Factory()
+        assert str() == ""  # TODO: 実装
