@@ -1,0 +1,30 @@
+from django.db import models
+from django.db.models import BooleanField, CharField, DateField, DateTimeField, TextField, URLField
+from django.urls import reverse
+
+from apps.libs.actions import ActionMixin
+from apps.libs.models.mixins import CRUDLMixin
+
+
+class {{ model_name }}QuerySet(models.QuerySet):
+    def __init__(self, model=None, query=None, using=None, hints=None):
+        super().__init__(model, query, using, hints)
+
+
+class {{ model_name }}Manager(models.Manager):
+    def get_queryset(self):
+        return {{ model_name }}QuerySet(self.model, using=self._db)
+
+
+class {{ model_name }}(CRUDLMixin, ActionMixin, models.Model):
+    {% for field_code in field_codes %}{{ field_code|safe }}
+    {% endfor %}
+    url_prefix = "{{ url_prefix }}"
+    objects = {{ model_name }}Manager()
+
+    def __str__(self):
+        # TODO
+        pass
+
+    class Meta:
+        verbose_name = verbose_name_plural = "{{ model_name }}"

@@ -1,0 +1,10 @@
+import factory
+
+from {{ package }}.models import {{ model_name }}
+
+
+class {{ model_name }}Factory(factory.django.DjangoModelFactory):
+    # TODO: 実装
+
+    class Meta:
+        model = {{ model_name }}
